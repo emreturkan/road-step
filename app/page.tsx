@@ -252,14 +252,13 @@ export default function Component() {
                 <CardFooter>
                   <Dialog>
                     <DialogTrigger asChild>
-                      <Button variant="outline">Edit Profile</Button>
+                      <Button variant="outline">Open Stepper</Button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-5xl">
                       <DialogHeader>
-                        <DialogTitle>Edit profile</DialogTitle>
+                        <DialogTitle>Plan Stepper</DialogTitle>
                         <DialogDescription>
-                          Make changes to your profile here. Click save when
-                          you're done.
+                          Set your steps, keep organized and record them!
                         </DialogDescription>
                       </DialogHeader>
                       <StepperScrollTracking title={tape.name} />

@@ -1,18 +1,30 @@
 "use client";
 import { Step, type StepItem, Stepper, useStepper } from "@/components/stepper";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 
 export default function StepperScrollTracking({ title }: { title: string }) {
   const [steps, setSteps] = useState([
-    { label: "Step 1" },
+    { label: "Step 1", description: "Step 1 Description" },
   ] satisfies StepItem[]);
 
   const addSteps = () => {
     setSteps((prevSteps) => [
       ...prevSteps,
-      { label: "Step " + (prevSteps.length + 1) },
+      {
+        label: "Step " + (prevSteps.length + 1),
+        description: "Step " + (prevSteps.length + 1) + " Description",
+      },
     ]);
+  };
+
+  const handleDescriptionChange = (index: number, event: any) => {
+    setSteps((prevSteps) =>
+      prevSteps.map((step, i) =>
+        i === index ? { ...step, description: event.target.value } : step
+      )
+    );
   };
 
   return (
@@ -27,9 +39,12 @@ export default function StepperScrollTracking({ title }: { title: string }) {
           return (
             <Step key={stepProps.label} {...stepProps}>
               <div className="h-40 flex items-center justify-center my-4 border bg-secondary text-primary rounded-md">
-                <h1 className="text-xl">
-                  {title} {index + 1}
-                </h1>
+                <Textarea
+                  className="w-full h-full"
+                  placeholder={stepProps.description}
+                  value={steps[index].description}
+                  onChange={(e) => handleDescriptionChange(index, e)}
+                />
               </div>
               <StepButtons />
             </Step>
