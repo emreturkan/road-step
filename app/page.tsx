@@ -17,6 +17,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import StepperScrollTracking from "./stepper-scroll";
 
 export default function Component() {
   function NotebookIcon(props: React.SVGProps<SVGSVGElement>) {
@@ -319,9 +329,24 @@ export default function Component() {
                 </div>
               </CardHeader>
               <CardFooter>
-                <Button variant="ghost" size="sm" className="w-full">
-                  View
-                </Button>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="outline">Edit Stepper</Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-4xl">
+                    <DialogHeader>
+                      <DialogTitle>Edit profile</DialogTitle>
+                      <DialogDescription>
+                        Make changes to your profile here. Click save when
+                        you're done.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <StepperScrollTracking />
+                    <DialogFooter>
+                      <Button type="submit">Save changes</Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
               </CardFooter>
             </Card>
           </div>
