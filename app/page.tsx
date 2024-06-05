@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -28,67 +29,77 @@ import {
 } from "@/components/ui/dialog";
 import StepperScrollTracking from "./stepper-scroll";
 import GuestbookAuth from "./auth";
-
+import { useDragAndDrop } from "@formkit/drag-and-drop/react";
+import { cn } from "@/lib/utils";
+import {
+  Bell,
+  Calendar,
+  CalendarDays,
+  File,
+  Grid3x3,
+  Home,
+  Kanban,
+  List,
+  NoteBook,
+  Search,
+} from "@/assets/icons";
 export default function Component() {
-  function NotebookIcon(props: React.SVGProps<SVGSVGElement>) {
-    return (
-      <svg
-        {...props}
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M2 6h4" />
-        <path d="M2 10h4" />
-        <path d="M2 14h4" />
-        <path d="M2 18h4" />
-        <rect width="16" height="20" x="4" y="2" rx="2" />
-        <path d="M16 2v20" />
-      </svg>
-    );
-  }
-
-  function SearchIcon(props: React.SVGProps<SVGSVGElement>) {
-    return (
-      <svg
-        {...props}
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <circle cx="11" cy="11" r="8" />
-        <path d="m21 21-4.3-4.3" />
-      </svg>
-    );
-  }
+  const [parent, tapes] = useDragAndDrop<HTMLDivElement, any>([
+    {
+      id: 1,
+      name: "Project Roadmap1",
+      desc: "Milestones and deliverables",
+      date: "June 1, 2023",
+    },
+    {
+      id: 2,
+      name: "Project Roadmap2",
+      desc: "Milestones and deliverables",
+      date: "June 1, 2023",
+    },
+    {
+      id: 3,
+      name: "Project Roadmap3",
+      desc: "Milestones and deliverables",
+      date: "June 1, 2023",
+    },
+  ]);
+  const meteors = new Array(20).fill(true);
 
   return (
     <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-gray-100/40 lg:block dark:bg-gray-800/40">
         <div className="flex h-full max-h-screen flex-col gap-2">
-          <div className="flex h-[60px] items-center border-b px-6">
+          <div className="flex h-[60px] max-w-[250px]  relative   items-center border-b px-6">
+            <div className="absolute  w-full    px-4 py-8 h-full overflow-hidden  flex flex-col justify-end items-start">
+              {meteors.map((el, idx) => (
+                <span
+                  key={"meteor" + idx}
+                  className={cn(
+                    "animate-meteor-effect absolute top-1/2 left-1/2 h-0.5 w-0.5 rounded-[9999px] bg-slate-500 shadow-[0_0_0_1px_#ffffff10] rotate-[215deg] w",
+                    "before:content-[''] before:absolute before:top-1/2 before:transform before:-translate-y-[50%] before:w-[50px] before:h-[1px] before:bg-gradient-to-r before:from-[#64748b] before:to-transparent"
+                  )}
+                  style={{
+                    top: 0,
+                    left:
+                      Math.floor(Math.random() * (400 - -400) + -400) + "px",
+                    animationDelay: Math.random() * (0.8 - 0.2) + 0.2 + "s",
+                    animationDuration:
+                      Math.floor(Math.random() * (10 - 2) + 2) + "s",
+                  }}
+                ></span>
+              ))}
+            </div>
             <Link
               href="#"
               className="flex items-center gap-2 font-semibold"
               prefetch={false}
             >
-              <NotebookIcon className="h-6 w-6" />
+              <NoteBook className="h-6 w-6" />
               <span className="">Road Step</span>
             </Link>
             <Button variant="outline" size="icon" className="ml-auto h-8 w-8">
-              <BellIcon className="h-4 w-4" />
+              <Bell className="h-4 w-4" />
               <span className="sr-only">Toggle notifications</span>
             </Button>
           </div>
@@ -99,7 +110,7 @@ export default function Component() {
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
                 prefetch={false}
               >
-                <HomeIcon className="h-4 w-4" />
+                <Home className="h-4 w-4" />
                 Home
               </Link>
               <Link
@@ -107,7 +118,7 @@ export default function Component() {
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
                 prefetch={false}
               >
-                <CalendarIcon className="h-4 w-4" />
+                <Calendar className="h-4 w-4" />
                 Calendar
               </Link>
               <Link
@@ -115,7 +126,7 @@ export default function Component() {
                 className="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-900 transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50"
                 prefetch={false}
               >
-                <NotebookIcon className="h-4 w-4" />
+                <NoteBook className="h-4 w-4" />
                 Notes
               </Link>
               <Link
@@ -123,7 +134,7 @@ export default function Component() {
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
                 prefetch={false}
               >
-                <ListIcon className="h-4 w-4" />
+                <List className="h-4 w-4" />
                 Tasks
               </Link>
               <Link
@@ -131,7 +142,7 @@ export default function Component() {
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
                 prefetch={false}
               >
-                <FileIcon className="h-4 w-4" />
+                <File className="h-4 w-4" />
                 Documents
               </Link>
               <Link
@@ -139,7 +150,7 @@ export default function Component() {
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
                 prefetch={false}
               >
-                <KanbanIcon className="h-4 w-4" />
+                <Kanban className="h-4 w-4" />
                 Kanban
               </Link>
               <Link
@@ -147,7 +158,7 @@ export default function Component() {
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
                 prefetch={false}
               >
-                <Grid3x3Icon className="h-4 w-4" />
+                <Grid3x3 className="h-4 w-4" />
                 Wiki
               </Link>
             </nav>
@@ -173,12 +184,12 @@ export default function Component() {
       <div className="flex flex-col">
         <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
           <Link href="#" className="lg:hidden" prefetch={false}>
-            <NotebookIcon className="h-6 w-6" />
+            <NoteBook className="h-6 w-6" />
             <span className="sr-only">Home</span>
           </Link>
           <div className="w-full flex-1">
             <div className="relative">
-              <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400" />
+              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400" />
               <Input
                 type="search"
                 placeholder="Search notes, tasks, and documents..."
@@ -220,320 +231,50 @@ export default function Component() {
               New Note
             </Button>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <Card className="flex flex-col h-[200px]">
-              <CardHeader className="flex-1 flex flex-col justify-between">
-                <div>
-                  <h3 className="text-lg font-semibold">Meeting Notes</h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Summary of the team meeting
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-                  <CalendarDaysIcon className="h-4 w-4" />
-                  <span>May 15, 2023</span>
-                </div>
-              </CardHeader>
-              <CardFooter>
-                <Button variant="ghost" size="sm" className="w-full">
-                  View
-                </Button>
-              </CardFooter>
-            </Card>
-            <Card className="flex flex-col h-[200px]">
-              <CardHeader className="flex-1 flex flex-col justify-between">
-                <div>
-                  <h3 className="text-lg font-semibold">Project Roadmap</h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Milestones and deliverables
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-                  <CalendarDaysIcon className="h-4 w-4" />
-                  <span>June 1, 2023</span>
-                </div>
-              </CardHeader>
-              <CardFooter>
-                <Button variant="ghost" size="sm" className="w-full">
-                  View
-                </Button>
-              </CardFooter>
-            </Card>
-            <Card className="flex flex-col h-[200px]">
-              <CardHeader className="flex-1 flex flex-col justify-between">
-                <div>
-                  <h3 className="text-lg font-semibold">Design Brainstorm</h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Ideas for the new website
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-                  <CalendarDaysIcon className="h-4 w-4" />
-                  <span>April 28, 2023</span>
-                </div>
-              </CardHeader>
-              <CardFooter>
-                <Button variant="ghost" size="sm" className="w-full">
-                  View
-                </Button>
-              </CardFooter>
-            </Card>
-            <Card className="flex flex-col h-[200px]">
-              <CardHeader className="flex-1 flex flex-col justify-between">
-                <div>
-                  <h3 className="text-lg font-semibold">Marketing Strategy</h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Plans for the Q3 campaign
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-                  <CalendarDaysIcon className="h-4 w-4" />
-                  <span>July 10, 2023</span>
-                </div>
-              </CardHeader>
-              <CardFooter>
-                <Button variant="ghost" size="sm" className="w-full">
-                  View
-                </Button>
-              </CardFooter>
-            </Card>
-            <Card className="flex flex-col h-[200px]">
-              <CardHeader className="flex-1 flex flex-col justify-between">
-                <div>
-                  <h3 className="text-lg font-semibold">Product Specs</h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Requirements and features
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-                  <CalendarDaysIcon className="h-4 w-4" />
-                  <span>August 1, 2023</span>
-                </div>
-              </CardHeader>
-              <CardFooter>
-                <Button variant="ghost" size="sm" className="w-full">
-                  View
-                </Button>
-              </CardFooter>
-            </Card>
-            <Card className="flex flex-col h-[200px]">
-              <CardHeader className="flex-1 flex flex-col justify-between">
-                <div>
-                  <h3 className="text-lg font-semibold">Team Offsite</h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Agenda and activities
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-                  <CalendarDaysIcon className="h-4 w-4" />
-                  <span>September 15, 2023</span>
-                </div>
-              </CardHeader>
-              <CardFooter>
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button variant="outline">Edit Stepper</Button>
-                  </DialogTrigger>
-                  <DialogContent className="sm:max-w-4xl">
-                    <DialogHeader>
-                      <DialogTitle>Edit profile</DialogTitle>
-                      <DialogDescription>
-                        Make changes to your profile here. Click save when
-                        you're done.
-                      </DialogDescription>
-                    </DialogHeader>
-                    <StepperScrollTracking />
-                    <DialogFooter>
-                      <Button type="submit">Save changes</Button>
-                    </DialogFooter>
-                  </DialogContent>
-                </Dialog>
-              </CardFooter>
-            </Card>
+          <div
+            ref={parent}
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+          >
+            {tapes.map((tape) => (
+              <Card key={tape.id} className="flex flex-col h-[200px]">
+                <CardHeader className="flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-lg font-semibold">{tape.name}</h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      {tape.desc}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+                    <CalendarDays className="h-4 w-4" />
+                    <span>{tape.date}</span>
+                  </div>
+                </CardHeader>
+                <CardFooter>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button variant="outline">Edit Profile</Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-5xl">
+                      <DialogHeader>
+                        <DialogTitle>Edit profile</DialogTitle>
+                        <DialogDescription>
+                          Make changes to your profile here. Click save when
+                          you're done.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <StepperScrollTracking title={tape.name} />
+                      <DialogFooter>
+                        <Button type="submit">Save changes</Button>
+                      </DialogFooter>
+                    </DialogContent>
+                  </Dialog>
+                </CardFooter>
+              </Card>
+            ))}
           </div>
           <GuestbookAuth />
         </main>
       </div>
     </div>
   );
-}
-
-function BellIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
-      <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
-    </svg>
-  );
-}
-
-function CalendarDaysIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M8 2v4" />
-      <path d="M16 2v4" />
-      <rect width="18" height="18" x="3" y="4" rx="2" />
-      <path d="M3 10h18" />
-      <path d="M8 14h.01" />
-      <path d="M12 14h.01" />
-      <path d="M16 14h.01" />
-      <path d="M8 18h.01" />
-      <path d="M12 18h.01" />
-      <path d="M16 18h.01" />
-    </svg>
-  );
-}
-
-function CalendarIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M8 2v4" />
-      <path d="M16 2v4" />
-      <rect width="18" height="18" x="3" y="4" rx="2" />
-      <path d="M3 10h18" />
-    </svg>
-  );
-}
-
-function FileIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
-      <path d="M14 2v4a2 2 0 0 0 2 2h4" />
-    </svg>
-  );
-}
-
-function Grid3x3Icon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect width="18" height="18" x="3" y="3" rx="2" />
-      <path d="M3 9h18" />
-      <path d="M3 15h18" />
-      <path d="M9 3v18" />
-      <path d="M15 3v18" />
-    </svg>
-  );
-}
-
-function HomeIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-      <polyline points="9 22 9 12 15 12 15 22" />
-    </svg>
-  );
-}
-
-function KanbanIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M6 5v11" />
-      <path d="M12 5v6" />
-      <path d="M18 5v14" />
-    </svg>
-  );
-}
-
-function ListIcon(props: React.SVGProps<SVGSVGElement>) {
-  {
-    return (
-      <svg
-        {...props}
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <line x1="8" x2="21" y1="6" y2="6" />
-        <line x1="8" x2="21" y1="12" y2="12" />
-        <line x1="8" x2="21" y1="18" y2="18" />
-        <line x1="3" x2="3.01" y1="6" y2="6" />
-        <line x1="3" x2="3.01" y1="12" y2="12" />
-        <line x1="3" x2="3.01" y1="18" y2="18" />
-      </svg>
-    );
-  }
 }

@@ -1,21 +1,20 @@
 "use client";
 import { Step, type StepItem, Stepper, useStepper } from "@/components/stepper";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
-const steps = [
-  { label: "Step 1" },
-  { label: "Step 2" },
-  { label: "Step 3" },
-  { label: "Step 4" },
-  { label: "Step 5" },
-  { label: "Step 6" },
-  { label: "Step 7" },
-  { label: "Step 8" },
-  { label: "Step 9" },
-  { label: "Step 10" },
-] satisfies StepItem[];
+export default function StepperScrollTracking({ title }: { title: string }) {
+  const [steps, setSteps] = useState([
+    { label: "Step 1" },
+  ] satisfies StepItem[]);
 
-export default function StepperScrollTracking() {
+  const addSteps = () => {
+    setSteps((prevSteps) => [
+      ...prevSteps,
+      { label: "Step " + (prevSteps.length + 1) },
+    ]);
+  };
+
   return (
     <div className="flex w-full flex-col gap-4">
       <Stepper
@@ -28,12 +27,17 @@ export default function StepperScrollTracking() {
           return (
             <Step key={stepProps.label} {...stepProps}>
               <div className="h-40 flex items-center justify-center my-4 border bg-secondary text-primary rounded-md">
-                <h1 className="text-xl">Step {index + 1}</h1>
+                <h1 className="text-xl">
+                  {title} {index + 1}
+                </h1>
               </div>
               <StepButtons />
             </Step>
           );
         })}
+        <Button size="sm" onClick={addSteps}>
+          Add
+        </Button>
         <FinalStep />
       </Stepper>
     </div>

@@ -1,6 +1,10 @@
+"use client";
 import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
 import { useStepper } from "./use-stepper";
+import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 interface StepLabelProps {
   isCurrentStep?: boolean;
@@ -44,6 +48,15 @@ const StepLabel = ({
   const { variant, styles, size, orientation } = useStepper();
   const shouldRender = !!label || !!description;
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [text, setText] = useState<any>(label);
+  const handleClick = () => {
+    setIsEditing(true);
+  };
+  const handleSave = () => {
+    setIsEditing(false);
+  };
+
   return shouldRender ? (
     <div
       aria-current={isCurrentStep ? "step" : undefined}
@@ -68,7 +81,26 @@ const StepLabel = ({
             styles?.["step-label"]
           )}
         >
-          {label}
+          <div className="">
+            {isEditing ? (
+              <div className="flex items-center space-x-2">
+                <Input
+                  type="text"
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  className="flex-1 px-4 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+                />
+                <Button onClick={handleSave}>Save</Button>
+              </div>
+            ) : (
+              <div
+                className="text-gray-800 dark:text-gray-200 text-lg font-medium cursor-pointer"
+                onClick={handleClick}
+              >
+                {text}
+              </div>
+            )}
+          </div>
         </span>
       )}
       {!!description && (
