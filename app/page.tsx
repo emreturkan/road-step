@@ -27,6 +27,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import StepperScrollTracking from "./stepper-scroll";
+import GuestbookAuth from "./auth";
 
 export default function Component() {
   function NotebookIcon(props: React.SVGProps<SVGSVGElement>) {
@@ -350,6 +351,7 @@ export default function Component() {
               </CardFooter>
             </Card>
           </div>
+          <GuestbookAuth />
         </main>
       </div>
     </div>

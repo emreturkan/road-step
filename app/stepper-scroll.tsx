@@ -9,6 +9,10 @@ const steps = [
   { label: "Step 4" },
   { label: "Step 5" },
   { label: "Step 6" },
+  { label: "Step 7" },
+  { label: "Step 8" },
+  { label: "Step 9" },
+  { label: "Step 10" },
 ] satisfies StepItem[];
 
 export default function StepperScrollTracking() {
