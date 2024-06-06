@@ -1,6 +1,6 @@
-export { default as NoteBook } from "./notebook";
-export { default as Search } from "./search";
-export { default as Bell } from "./bell";
+export { default as NoteBook } from "./Notebook";
+export { default as Search } from "./Search";
+export { default as Bell } from "./Bell";
 export { default as CalendarDays } from "./CalendarDays";
 export { default as Calendar } from "./Calendar";
 export { default as File } from "./File";
